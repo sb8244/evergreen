@@ -1,0 +1,27 @@
+This document is for the mongodb schema descriptors. It is mainly for brainstorming among programmers. The format is "X Collection:" followed by a list of the field names and descriptions.
+
+User Collection:
+	"_id" # given by mongodb
+	"name" # User's name which is given by them. not used for login
+	"email" # User's email which is used for login
+	"password" # MD5 password used for login
+	"room_list" # Array of room ids which the user has posted to. This is used for recalling past lists.
+
+Example:
+
+db.users.save( {
+	name:"Stephen Bussey", 
+	email:"sb8244@cs.ship.edu",
+	password:"5f4dcc3b5aa765d61d8327deb882cf99",
+	room_list:[]
+});
+
+db.users.update(
+	{_id: ObjectId("516cef0cddede7b843180de0")},
+	{$push: {room_list: "1"}}
+)
+
+db.users.update(
+	{_id: ObjectId("516cef0cddede7b843180de0")},
+	{$pull: {room_list: "1"}}
+)
