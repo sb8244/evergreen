@@ -34,3 +34,33 @@ db.users.save( {
 });
 
 db.users.find({email:"test@test.com", password:"5f4dcc3b5aa765d61d8327deb882cf99"});
+
+
+
+/**************************************************************************************
+Rooms contain documents. Question is, do we make the room contain a list of document_ids or the documents themselves 
+
+Documents in a room should be ordered by the number of comments
+Room Collection
+{
+	"_id" # given by mongodb
+	"name" # Given by the user
+	"password" # Password protected?
+	"authorized_user_ids" # List of people who can interact
+	"documents" 
+	{
+		"name" # Name of the document
+		"type" # type
+		"content" # content of document
+		"likes" # number of likes
+		"dislikes" # number of dislikes
+		"reported" # was this reported
+		"comments" # comments by users
+		{
+			"author" # who wrote it
+			"date" # when was it written
+			"author_id" # id of the author
+
+		}
+	}
+}
