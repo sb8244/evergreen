@@ -25,3 +25,12 @@ db.users.update(
 	{_id: ObjectId("516cef0cddede7b843180de0")},
 	{$pull: {room_list: "1"}}
 )
+
+db.users.save( {
+	name:"Tester", 
+	email:"test@test.com",
+	password:"5f4dcc3b5aa765d61d8327deb882cf99",
+	room_list:[]
+});
+
+db.users.find({email:"test@test.com", password:"5f4dcc3b5aa765d61d8327deb882cf99"});

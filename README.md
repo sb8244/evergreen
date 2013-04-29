@@ -1,0 +1,1 @@
+To run the tests, enter the src package and enter ./runtests.js from the command line
