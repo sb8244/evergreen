@@ -27,10 +27,10 @@ var port = 27017;
  */
 exports.getObjectID = function(string, callback) {
 	if(typeof string == 'ObjectID')
-		callback(string);
+		return callback(string);
 	else
 	{
-		callback(new ObjectID(string));
+		return callback(new ObjectID(string));
 	}
 }
 
@@ -39,7 +39,7 @@ exports.getObjectID = function(string, callback) {
  */
 exports.getCollection = function(collection, callback) {
 	db.collection(collection, function(error, the_collection) {
-		if ( error ) callback(error);
-		else callback(null, the_collection);
+		if ( error ) return callback(error);
+		else return callback(null, the_collection);
 	});
 }

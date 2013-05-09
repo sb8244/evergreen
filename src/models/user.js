@@ -7,9 +7,9 @@ exports.findById = function(id, callback) {
 	mongo.getCollection("users", function(err, col) {
 		mongo.getObjectID(id,function(object_id) {
 			col.find({_id: object_id}).toArray(function(error, res) {
-				if(error) callback(error);
-				else if(res[0] == undefined) callback({code: 1, error: "No such user"});
-				else callback(null, res[0]);
+				if(error) return callback(error);
+				else if(res[0] == undefined) return callback({code: 1, error: "No such user"});
+				else return callback(null, res[0]);
 			});
 		});
 	});
@@ -27,9 +27,23 @@ exports.checkLogin = function(email, password, callback) {
 		//find user by email and MD5 password
 		//If the user is found, return the user id, false otherwise
 		col.find({email: email, password: cryptPass}).toArray(function(error, res) {
-			if(error) callback(error);
-			else if(res[0] == undefined) callback(null, false);
-			else callback(null, res[0]._id);
+			if(error) return callback(error);
+			else if(res[0] == undefined) return callback(null, false);
+			else return callback(null, res[0]._id);
 		});
 	});
+}
+
+exports.registerUser = function(data, callback) {
+	/* data should contain several properties:
+	 	data.name
+	 	data.email
+	 	data.password
+	 */
+
+	 //Step 1: Get the users collection from mongo, you can see how to do this on lines 23
+	 //Step 2: Encrypt data.password using MD5. You can see how to do this on line 24-25
+	 //Step 3: Using the examples provided in the schema, write the user's information to the database
+	 //Step 4: The database should have unique email addresses
+	 //Final: callback(err, user_id)
 }
