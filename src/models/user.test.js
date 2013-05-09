@@ -1,4 +1,4 @@
-var UserProvider = require("./user").UserProvider;
+var userProvider = require("./user");
 
 var id = "517e5d6cce44c18957648607";
 exports.getUser = {
@@ -10,8 +10,7 @@ exports.getUser = {
 	 */
 	testGetUserByIDGood: function(test) {
 		test.expect(7);
-		var users = new UserProvider(true);
-		users.findById(id, function(err, result) {
+		userProvider.findById(id, function(err, result) {
 			test.equal(err, null);
 			test.notEqual(result, null);
 			test.equal(id, result._id);
@@ -30,9 +29,8 @@ exports.getUser = {
 	 */
 	testGetUserByIDBad: function(test) {
 		test.expect(4);
-		var users = new UserProvider(true);
 		var badID = "016cfa412bad24810c0f8349";
-		users.findById(badID, function(err, result) {
+		userProvider.findById(badID, function(err, result) {
 			test.notEqual(err, null);
 			test.equal(err.error, "No such user");
 			test.equal(err.code, 1);
@@ -48,10 +46,9 @@ exports.checkLogin = {
 	 */
 	testCheckLoginBad: function(test) {
 		test.expect(2);
-		var users = new UserProvider(true);
 		var badEmail = "doesnotexist";
 		var badPassword = "doesntmatter";
-		users.checkLogin(badEmail, badPassword, function(error, result) {
+		userProvider.checkLogin(badEmail, badPassword, function(error, result) {
 			test.equal(error, null);
 			test.equal(result, false);
 			test.done();
@@ -62,10 +59,9 @@ exports.checkLogin = {
 	 */ 
 	testCheckLoginGood: function(test) {
 		test.expect(3);
-		var users = new UserProvider(true);
 		var goodEmail = "test@test.com";
 		var goodPassword = "password";
-		users.checkLogin(goodEmail, goodPassword, function(error, result) {
+		userProvider.checkLogin(goodEmail, goodPassword, function(error, result) {
 			test.equal(error, null);
 			test.notEqual(result, false);
 			test.equal(result, id);

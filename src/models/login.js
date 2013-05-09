@@ -1,11 +1,6 @@
-var UserProvider = require("./user").UserProvider;
+var userProvider = require("./user");
 
-var LoginProvider = function(useTestDB) {
-	testDB = useTestDB;
-}
-
-LoginProvider.prototype.login = function(email, password, req, callback) {
-	var userProvider = new UserProvider(testDB);
+exports.login = function(email, password, req, callback) {
 	userProvider.checkLogin(email, password, function(error, result) {
 		if(error || result === false) {
 			callback(false);
@@ -16,8 +11,6 @@ LoginProvider.prototype.login = function(email, password, req, callback) {
 	});
 }
 
-LoginProvider.prototype.isLoggedIn = function(req, callback) {
+exports.isLoggedIn = function(req, callback) {
 	callback(req.session.user_id != undefined);
 }
-
-exports.LoginProvider = LoginProvider;

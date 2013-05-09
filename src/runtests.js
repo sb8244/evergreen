@@ -29,7 +29,9 @@ var fs = require('fs'),
     foundTests = [],
     start = new Date(),
     end, tests = [], i;
- 
+    
+global.testing = true;
+
 try {
     var testrunner = require('nodeunit').testrunner;
 } catch(e) {

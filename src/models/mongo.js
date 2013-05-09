@@ -7,11 +7,11 @@ var ObjectID = require("mongodb").ObjectID;
 var host = "localhost";
 var port = 27017;
 
-var Mongo = function(useTestDB) {
+(function() {
 	var dbToUse = "evergreen";
-	if(useTestDB === true)
+	if(global.testing === true)
 		dbToUse = "evergreen_test";
-	this.db = new Db(dbToUse, new Server(
+	db = new Db(dbToUse, new Server(
 		host, 
 		port,
 		{auto_reconnect: true},
@@ -19,13 +19,13 @@ var Mongo = function(useTestDB) {
 	),
 		{safe: true}
 	);
-	this.db.open(function(){});
-}
+	db.open(function(){});
+})();
 
 /*
  * Wrapper around new ObjectID to prevent extra imports and confusion
  */
-Mongo.prototype.getObjectID = function(string, callback) {
+exports.getObjectID = function(string, callback) {
 	if(typeof string == 'ObjectID')
 		callback(string);
 	else
@@ -37,11 +37,9 @@ Mongo.prototype.getObjectID = function(string, callback) {
 /*
  * Get a collection from Mongo
  */
-Mongo.prototype.getCollection = function(collection, callback) {
-	this.db.collection(collection, function(error, the_collection) {
+exports.getCollection = function(collection, callback) {
+	db.collection(collection, function(error, the_collection) {
 		if ( error ) callback(error);
 		else callback(null, the_collection);
 	});
 }
-
-exports.Mongo = Mongo;

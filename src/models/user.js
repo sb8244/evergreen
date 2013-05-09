@@ -1,16 +1,9 @@
-var Mongo = require("./mongo").Mongo;
-
-/*
- * Pass true during testing
- */
-var UserProvider = function(useTestDB){
-	mongo = new Mongo(useTestDB);
-}
+var mongo = require("./mongo");
 
 /*
  * Returns a single user by _id
  */
-UserProvider.prototype.findById = function(id, callback) {
+exports.findById = function(id, callback) {
 	mongo.getCollection("users", function(err, col) {
 		mongo.getObjectID(id,function(object_id) {
 			col.find({_id: object_id}).toArray(function(error, res) {
@@ -26,7 +19,7 @@ UserProvider.prototype.findById = function(id, callback) {
  * Returns the _id from Mongo if the email/password exists in the database.
  * Returns false if it does not exist
  */
-UserProvider.prototype.checkLogin = function(email, password, callback) {
+exports.checkLogin = function(email, password, callback) {
 	mongo.getCollection("users", function(err, col) {
 		var crypto = require('crypto');
 		var cryptPass = crypto.createHash('md5').update(password).digest("hex");
@@ -40,5 +33,3 @@ UserProvider.prototype.checkLogin = function(email, password, callback) {
 		});
 	});
 }
-
-exports.UserProvider = UserProvider;
