@@ -43,35 +43,22 @@ exports.registerUser = function(data, callback) {
 
 	 //Step 1: Get the users collection from mongo, you can see how to do this on lines 23
 	mongo.getCollection("users", function(err, col) {
-		if(err){
-
-			console.log('err!');
-			return callback(err);
-		}else{
-	 //Step 2: Encrypt data.password using MD5. You can see how to do this on line 24-25
+		if(err) return callback(err);
+		else {
+	 		//Step 2: Encrypt data.password using MD5. You can see how to do this on line 24-25
 			var crypto = require('crypto');
-			var cryptPass = crypto.createHash('md5').update(date.password).digest("hex");
-	 //Step 3: Using the examples provided in the schema, write the user's information to the database
-			col.find({email:data.email},function(err,data){
-	 //Step 4: The database should have unique email addresses
-					if(err){
-						return calback(err);
-					}else if(data.length == 0){	//not exist
-				
-						col.save({
-							name:data.name,
-							email:data.email,
-							password:cryptPass,
-							room_list:[] }
-						, function(err, data){
-	 //Final: callback(err, user_id)
-							return callback(err, data.user_id);
-						});
-						
-					}else{				//exist email, maybe length == 1
-						return callback(err);
-					}
-
+			var cryptPass = crypto.createHash('md5').update(data.password).digest("hex");
+	 		//Step 3: Using the examples provided in the schema, write the user's information to the database
+			//Step 4: The database should have unique email addresses
+			var params = {
+				name:data.name,
+				email:data.email,
+				password:cryptPass,
+				room_list:[]
+			};
+			col.save(params, function(err, result){
+				if(err) return callback(err, null);
+				else return callback(err, result);
 			});
 		}
 

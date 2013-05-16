@@ -1,4 +1,5 @@
 var userProvider = require("./user");
+var mongo = require("./mongo");
 
 var id = "517e5d6cce44c18957648607";
 exports.getUser = {
@@ -68,6 +69,50 @@ exports.checkLogin = {
 			test.done();
 		});
 	},
+}
+
+exports.register = {
+	validRegister: function(test) {
+		var data = {
+			name: "Tester",
+		 	email: "Nodupe@test.com",
+		 	password: "password"
+		};
+		userProvider.registerUser(data, function(err, result) {
+			test.equals(err, null);
+			test.equals(result.name, data.name);
+			test.equals(result.email, data.email);
+			test.equals(result.password, "5f4dcc3b5aa765d61d8327deb882cf99");
+			mongo.getCollection("users", function(err, col) {
+				test.equals(err, null);
+				col.remove({email:data.email},function(err, result) {
+					test.equals(err, null);
+					test.done();
+				});
+			});
+		});
+	},
+	invalidDuplicate: function(test) {
+		var data = {
+			name: "Tester",
+		 	email: "Nodupe@test.com",
+		 	password: "password"
+		};
+		userProvider.registerUser(data, function(err, result) {
+			test.equals(err, null);
+			userProvider.registerUser(data, function(err, result) {
+				test.equals(result, null);
+				test.equals(err.code, 11000);
+				mongo.getCollection("users", function(err, col) {
+					test.equals(err, null);
+					col.remove({email:data.email},function(err, result) {
+						test.equals(err, null);
+						test.done();
+					});
+				});
+			});
+		});
+	}
 }
 
 /*
