@@ -1,3 +1,4 @@
+var register = require("./routes/register");
 /*
  * All routes are defined in this file.
  *
@@ -9,11 +10,6 @@ exports.create = function( app ) {
 	 * Index Routes
 	 */
 	//app.get('/', index.index);
-	app.get('/', function() {
-		var UserProvider = require("./models/user").UserProvider;
-		var users = new UserProvider();
-		users.findById("516cef0cddede7b843180de0", function(err, res) {
-			console.log(res);
-		})
-	});
+	app.get('/register', register.index);
+	app.post('/register', register.process);
 }
