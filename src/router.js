@@ -1,4 +1,6 @@
 var register = require("./routes/register");
+var login = require("./routes/login");
+var home = require("./routes/home");
 /*
  * All routes are defined in this file.
  *
@@ -12,4 +14,23 @@ exports.create = function( app ) {
 	//app.get('/', index.index);
 	app.get('/register', register.index);
 	app.post('/register', register.process);
+
+
+	app.get('/login', login.index);
+	app.post('/login', login.process);
+
+	app.all('/user/*', requireAuthentication);
+	app.get('/user/home', home.index);
+
+}
+
+var loginProvider = require("./models/login");
+var requireAuthentication = function(req,res,next) {
+	loginProvider.isLoggedIn(req, function(result) {
+	    if(result === true) {
+	        next();
+	    } else {
+	       res.redirect("/login");
+	    }
+	});
 }
