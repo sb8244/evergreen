@@ -26,11 +26,11 @@ var port = 27017;
  * Wrapper around new ObjectID to prevent extra imports and confusion
  */
 exports.getObjectID = function(string, callback) {
-	if(typeof string == 'ObjectID')
+	if(typeof string != 'string') {
 		return callback(string);
-	else
-	{
-		return callback(new ObjectID(string));
+	} else {
+		var o = new ObjectID(string);
+		return callback(o);
 	}
 }
 
