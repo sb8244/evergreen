@@ -46,21 +46,27 @@ Room Collection
 	"_id" # given by mongodb
 	"name" # Given by the user
 	"password" # Password protected?
+	"date" # creation date
 	"authorized_user_ids" # List of people who can interact
 	"documents" 
-	{
-		"name" # Name of the document
-		"type" # type
-		"content" # content of document
-		"likes" # number of likes
-		"dislikes" # number of dislikes
-		"reported" # was this reported
-		"comments" # comments by users
+	[
 		{
-			"author" # who wrote it
-			"date" # when was it written
-			"author_id" # id of the author
-
+			"name" # Name of the document
+			"type" # type
+			"content" # content of document
+			"likes" # number of likes
+			"dislikes" # number of dislikes
+			"report_count" # Count of reports
+			"date" # creation date
+			"comments" # comments by users
+			[
+				{
+					"author" # who wrote it
+					"date" # when was it written
+					"author_id" # id of the author
+					"content" # content of the comment
+				}
+			]
 		}
-	}
+	]
 }
