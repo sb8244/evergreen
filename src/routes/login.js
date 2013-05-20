@@ -23,6 +23,10 @@ exports.process = function (req, res) {
 		{
 			var loginProvider = require("../models/login");
 			
+			res.render('login_ok', {
+				title: 'Login_ok',
+				form: form.toHTML()
+			});
 		},
 		other: function( form )
 		{
