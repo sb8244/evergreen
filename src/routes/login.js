@@ -1,6 +1,7 @@
 var forms = require("forms");
 var fields = forms.fields;
 var validators = forms.validators;
+var loginProvider = require("../models/login");
 
 /*
  * Define the registration form fields here
@@ -21,11 +22,17 @@ exports.process = function (req, res) {
 	form.handle(req, {
 		success: function( form ) 
 		{
-			var loginProvider = require("../models/login");
-			
-			res.render('login_ok', {
-				title: 'Login_ok',
-				form: form.toHTML()
+			loginProvider.login(form.data['email'], form.data['password'], req, function(result) {
+				if(result === false) {
+					form.fields.email.error = "Oops, your credentials are not valid";
+					res.render('login', {
+						title: 'Login - Oops',
+						error: true,
+						form: form.toHTML()
+					});
+				} else {
+					res.redirect("/user/home");
+				}
 			});
 		},
 		other: function( form )

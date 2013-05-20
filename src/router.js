@@ -12,10 +12,12 @@ exports.create = function( app ) {
 	 * Index Routes
 	 */
 	//app.get('/', index.index);
+	app.all("/register", preventAuthenticated);
 	app.get('/register', register.index);
 	app.post('/register', register.process);
 
 
+	app.all("/login", preventAuthenticated);
 	app.get('/login', login.index);
 	app.post('/login', login.process);
 
@@ -31,6 +33,16 @@ var requireAuthentication = function(req,res,next) {
 	        next();
 	    } else {
 	       res.redirect("/login");
+	    }
+	});
+}
+
+var preventAuthenticated = function(req, res, next) {
+	loginProvider.isLoggedIn(req, function(result) {
+	    if(result === true) {
+	    	res.redirect("/user/home");
+	    } else {
+	    	next();
 	    }
 	});
 }
