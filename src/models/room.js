@@ -1,6 +1,6 @@
 var mongo = require("./mongo");
 
-exports.createRoom = function(data, callback) {
+exports.createRoom = function(name, password, callback) {
 	/*
 	 * data {
 		name,
@@ -10,14 +10,14 @@ exports.createRoom = function(data, callback) {
 	 var date = new Date();
 	 mongo.getCollection("rooms", function(err, col) {
 
-	 	if(data.password) {
+	 	if(password != null) {
 			var crypto = require('crypto');
-			var cryptPass = crypto.createHash('md5').update(data.password).digest("hex");
+			var cryptPass = crypto.createHash('md5').update(password).digest("hex");
 		} else {
 			var cryptPass = null;
 		}
 	 	var params = {
-	 		name: data.name,
+	 		name: name,
 	 		password: cryptPass,
 	 		date: date,
 	 		authorized_user_ids: [],
@@ -40,4 +40,25 @@ exports.pushAuthorizedUserID = function(id, user_id, callback) {
 		 	});
 		 });
 	 });	
+}
+
+exports.pushDocument = function(id, name, type, content, callback) {
+	mongo.getCollection("rooms", function(err, col) {
+		mongo.getObjectID(id, function(object_id) {
+			var pushDocument = {
+				name: name,
+				type: type,
+				content: content,
+				likes: 0,
+				dislikes: 0,
+				report_count: 0,
+				date: new Date(),
+				comments: []
+			};
+			col.update({_id: object_id}, {$push: {documents: pushDocument}}, function(err, result) {
+		 		if(err) return callback(err, null);
+		 		return callback(null, result);
+		 	});
+		});
+	});
 }
