@@ -2,6 +2,7 @@ var register = require("./routes/register");
 var login = require("./routes/login");
 var home = require("./routes/home");
 var documentform = require("./routes/documentform");
+var upload = require("./routes/upload");
 /*
  * All routes are defined in this file.
  *
@@ -28,6 +29,9 @@ exports.create = function( app ) {
 	
 	app.get('/ajax/docuform', documentform.index);
 	app.post('/ajax/docuform', documentform.process);
+
+	app.get('/upload', upload.form);
+	app.post('/upload', upload.upload);
 }
 
 var loginProvider = require("./models/login");

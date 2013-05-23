@@ -1,0 +1,34 @@
+extends layout
+
+block content
+	.scroller.content
+		.element.video
+			p Title
+			p End
+		.element
+			p Title
+			p End
+		.element
+			p Title
+			p End
+		.element
+			p Title
+			p End
+		.element.video
+			p Title
+			p End
+		.element
+			p Title
+			p End
+		.element
+			p Title
+			p End
+		.element
+			p Title
+			p End
+		.element.video
+			p Title
+			p End
+		.element
+			p Title
+			p End
