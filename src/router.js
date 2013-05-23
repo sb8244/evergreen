@@ -35,13 +35,11 @@ exports.create = function( app ) {
 	app.get('/ajax/docuform', documentform.index);
 	app.post('/ajax/docuform', documentform.process);
 
-<<<<<<< HEAD
 	app.get('/upload', upload.form);
 	app.post('/upload', upload.upload);
-=======
+
 	app.get('/ajax/rooms/add', ajax.roomToolbarForm);
 	app.post('/ajax/rooms/add', ajax.addRoom);
->>>>>>> df493a05bf172d91c142a9db951f08bcd17eb5a8
 }
 
 var loginProvider = require("./models/login");

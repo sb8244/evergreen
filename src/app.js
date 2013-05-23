@@ -16,12 +16,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-<<<<<<< HEAD
 app.use(express.bodyParser({uploadDir:'./public/uploads'}));
-=======
-app.use(express.bodyParser());
 app.use(expressValidator);
->>>>>>> df493a05bf172d91c142a9db951f08bcd17eb5a8
 app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
