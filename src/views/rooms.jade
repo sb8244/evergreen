@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	.scroller.content
+		- each room in rooms
+			.element
+				p #{room.name}
+				p 
+					a(href="/room/#{room._id}") Explore

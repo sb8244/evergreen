@@ -63,6 +63,18 @@ exports.pushDocument = function(id, name, type, content, callback) {
 	});
 }
 
+exports.getRoom = function(id, callback) {
+	mongo.getCollection("rooms", function(err, col) {
+		mongo.getObjectID(id, function(object_id) {
+			col.find({_id: object_id}).toArray(function(err, item) {
+				if(err) return callback(err, null);
+				else if(item.length == 0) return callback(null, null);
+				else return callback(null, item[0]);
+			});
+		});
+	});
+}
+
 exports.listPublicRooms = function(callback) {
 	mongo.getCollection("rooms", function(err, col) {
 		col.find({password: null}).toArray(function(err, result) {

@@ -198,6 +198,35 @@ exports.find = {
 	}
 }
 
+exports.getRoom = {
+	getRoomNone: function(test) {
+		roomProvider.getRoom("517e5d6cce44c18957648607", function(err, result) {
+			test.equals(err, null);
+			test.equals(result, null);
+			test.done();
+		});
+	},
+	getRoomExists: function(test) {
+		var roomdata = {
+			name: "Test room",
+			password: null
+		}
+		roomProvider.createRoom(roomdata.name, roomdata.password, function(err,result) {
+			test.equals(err, null);
+			roomProvider.getRoom(result._id, function(err, result2) {
+				test.equals(err, null);
+				test.equals(result._id.str, result2._id.str);
+				mongo.getCollection("rooms", function(err, col) {
+					col.remove({name: roomdata.name}, function(err, result) {
+						test.equals(err, null);
+						test.done();
+					});
+				});
+			});
+		});
+	}
+}
+
 /*
  * Helper function for array equality
  */

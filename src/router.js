@@ -1,6 +1,7 @@
 var register = require("./routes/register");
 var login = require("./routes/login");
-var home = require("./routes/home");
+var room = require("./routes/room");
+var rooms = require("./routes/rooms");
 var documentform = require("./routes/documentform");
 /*
  * All routes are defined in this file.
@@ -23,8 +24,10 @@ exports.create = function( app ) {
 
 	app.get('/logout', login.logout);
 
-	app.all('/user/*', requireAuthentication);
-	app.get('/user/home', home.index);
+	app.all('/room*', requireAuthentication);
+	app.get('/rooms', rooms.index);
+
+	app.get('/room/:id', room.index);
 	
 	app.get('/ajax/docuform', documentform.index);
 	app.post('/ajax/docuform', documentform.process);

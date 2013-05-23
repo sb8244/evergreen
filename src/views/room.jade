@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	- if(room.documents.length == 0)
+		p No documents
+	.scroller.content
+		- each document in room.documents
+			.element
+				p #{document.name}
