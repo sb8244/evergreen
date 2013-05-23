@@ -1,1 +1,1 @@
-//upload files to ../uploads/md5_timestamp
+//upload files to ../public/uploads/md5_timestamp
