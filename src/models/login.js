@@ -13,3 +13,8 @@ exports.login = function(email, password, req, callback) {
 exports.isLoggedIn = function(req, callback) {
 	return callback(req.session.user_id != undefined);
 }
+
+exports.logout = function(req, callback) {
+	req.session.user_id = undefined;
+	return callback();
+}

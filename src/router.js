@@ -17,10 +17,11 @@ exports.create = function( app ) {
 	app.get('/register', register.index);
 	app.post('/register', register.process);
 
-
 	app.all("/login", preventAuthenticated);
 	app.get('/login', login.index);
 	app.post('/login', login.process);
+
+	app.get('/logout', login.logout);
 
 	app.all('/user/*', requireAuthentication);
 	app.get('/user/home', home.index);

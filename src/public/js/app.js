@@ -4,4 +4,5 @@ $(document).ready(function() {
 		layoutMode : 'fitRows'
 	});
 	$("body").css("overflow", "visible");
+	$(window).resize();
 });

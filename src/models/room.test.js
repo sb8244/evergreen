@@ -143,6 +143,61 @@ exports.document = {
 	}
 }
 
+exports.find = {
+	publicFindNone: function(test) {
+		roomProvider.listPublicRooms(function(err, result) {
+			test.equals(err, null);
+			test.equals(result.length, 0);
+			test.done();
+		});
+	},
+	publicFindSingle: function(test) {
+		var roomdata = {
+			name: "Test room",
+			password: null
+		}
+		roomProvider.createRoom(roomdata.name, roomdata.password, function(err,result) {
+			test.equals(err, null);
+			roomProvider.listPublicRooms(function(err, result) {
+				test.equals(err, null);
+				test.equals(result.length, 1);
+				test.equals(result[0].name, "Test room");
+				mongo.getCollection("rooms", function(err, col) {
+					col.remove({name: roomdata.name}, function(err, result) {
+						test.equals(err, null);
+						test.done();
+					});
+				});
+			});
+		});
+	},
+	publicFindMultiple: function(test) {
+		var roomdata = {
+			name: "Test room",
+			password: null
+		}
+		roomProvider.createRoom(roomdata.name, roomdata.password, function(err,result) {
+			test.equals(err, null);
+			roomProvider.createRoom(roomdata.name, roomdata.password, function(err,result) {
+				test.equals(err, null);
+				roomProvider.listPublicRooms(function(err, result) {
+					test.equals(err, null);
+					test.equals(result.length, 2);
+					test.equals(result[0].name, "Test room");
+					test.equals(result[1].name, "Test room");
+					test.notEqual(result[0]._id, result[1]._id);
+					mongo.getCollection("rooms", function(err, col) {
+						col.remove({name: roomdata.name}, function(err, result) {
+							test.equals(err, null);
+							test.done();
+						});
+					});
+				});
+			});
+		});
+	}
+}
+
 /*
  * Helper function for array equality
  */

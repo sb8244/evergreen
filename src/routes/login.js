@@ -18,6 +18,12 @@ exports.index = function( req, res ) {
 	});
 }
 
+exports.logout = function(req, res) {
+	loginProvider.logout(req, function() {
+		res.redirect("/login");
+	});
+}
+
 exports.process = function (req, res) {
 	form.handle(req, {
 		success: function( form ) 

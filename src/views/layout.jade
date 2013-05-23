@@ -6,16 +6,18 @@ html
 		link(rel='stylesheet', href='app.css')
 		link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
 		link(href='/stylesheets/isotope.css', rel='stylesheet')
-		link(rel='stylesheet', href='/stylesheets/style.css')
 
 		script(type='text/javascript', src='/js/jquery.js')
 		script(type='text/javascript', src='/js/isotope.js')
 		script(type='text/javascript', src='/js/app.js')
+
+		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		#sidebar
-			| left
+			include partials/left
 		.main
 			.header
 				div
 					h1 Content bar
-			block content
+			.body
+				block content
