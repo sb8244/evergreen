@@ -1,8 +1,21 @@
-doctype 5
+!!! 5
 html
-  head
-    title= title
-    link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+	head
+		title= title
+		
+		link(rel='stylesheet', href='app.css')
+		link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
+		link(href='/stylesheets/isotope.css', rel='stylesheet')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+
+		script(type='text/javascript', src='/js/jquery.js')
+		script(type='text/javascript', src='/js/isotope.js')
+		script(type='text/javascript', src='/js/app.js')
+	body
+		#sidebar
+			| left
+		.main
+			.header
+				div
+					h1 Content bar
+			block content
