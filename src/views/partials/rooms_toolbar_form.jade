@@ -1,0 +1,5 @@
+div(class='sub clearfix hide')
+	form(method='post', class="pull-left addroom", action="/ajax/rooms/add")
+		input(type="text",placeholder="Room title - Required",name="title")
+		input(type="password",placeholder="Password - Optional",name="password")
+		input(type="submit", class='btn', value="Add Room")

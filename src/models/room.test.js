@@ -185,7 +185,31 @@ exports.find = {
 					test.equals(result.length, 2);
 					test.equals(result[0].name, "Test room");
 					test.equals(result[1].name, "Test room");
-					test.notEqual(result[0]._id, result[1]._id);
+					test.notEqual(result[0]._id.toString(), result[1]._id.toString());
+					mongo.getCollection("rooms", function(err, col) {
+						col.remove({name: roomdata.name}, function(err, result) {
+							test.equals(err, null);
+							test.done();
+						});
+					});
+				});
+			});
+		});
+	},
+	privateOwned: function(test) {
+		var roomdata = {
+			name: "Test room",
+			password: "random"
+		}
+		roomProvider.createRoom(roomdata.name, roomdata.password, function(err,res) {
+			test.equals(err, null);
+			test.notEqual(res.password, null);
+			roomProvider.pushAuthorizedUserID(res._id, 1, function(err, result) {
+				test.equals(err, null);
+				roomProvider.listPrivateRoomsForUser(1, function(err, result) {
+					test.equals(err, null);
+					test.equals(result.length, 1);
+					test.equals(result[0]._id.toString(), res._id.toString());
 					mongo.getCollection("rooms", function(err, col) {
 						col.remove({name: roomdata.name}, function(err, result) {
 							test.equals(err, null);
@@ -197,6 +221,36 @@ exports.find = {
 		});
 	}
 }
+
+exports.getRoom = {
+	getRoomNone: function(test) {
+		roomProvider.getRoom("517e5d6cce44c18957648607", function(err, result) {
+			test.equals(err, null);
+			test.equals(result, null);
+			test.done();
+		});
+	},
+	getRoomExists: function(test) {
+		var roomdata = {
+			name: "Test room",
+			password: null
+		}
+		roomProvider.createRoom(roomdata.name, roomdata.password, function(err,result) {
+			test.equals(err, null);
+			roomProvider.getRoom(result._id, function(err, result2) {
+				test.equals(err, null);
+				test.equals(result._id.toString(), result2._id.toString());
+				mongo.getCollection("rooms", function(err, col) {
+					col.remove({name: roomdata.name}, function(err, result) {
+						test.equals(err, null);
+						test.done();
+					});
+				});
+			});
+		});
+	}
+}
+
 
 /*
  * Helper function for array equality

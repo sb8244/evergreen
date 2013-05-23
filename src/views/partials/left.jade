@@ -1,4 +1,15 @@
 h2 Dashboard
 ul
 	li
+		a(href="/rooms") Rooms
+	li
 		a(href="/logout") Logout
+div
+	-if (typeof(rooms_toolbar) !== 'undefined') {
+	.toolbar
+		include rooms_toolbar
+	-}
+	-if (typeof(room_toolbar) !== 'undefined') {
+	.toolbar
+		include room_toolbar
+	-}

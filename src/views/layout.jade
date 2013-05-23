@@ -3,11 +3,12 @@ html
 	head
 		title= title
 		
-		link(rel='stylesheet', href='app.css')
 		link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
 		link(href='/stylesheets/isotope.css', rel='stylesheet')
 
 		script(type='text/javascript', src='/js/jquery.js')
+		script(type='text/javascript', src='/js/bootstrap.min.js')
+		script(type='text/javascript', src='/js/notif.js')
 		script(type='text/javascript', src='/js/isotope.js')
 		script(type='text/javascript', src='/js/app.js')
 
@@ -16,8 +17,6 @@ html
 		#sidebar
 			include partials/left
 		.main
-			.header
-				div
-					h1 Content bar
 			.body
 				block content
+		div(class="notifications center")

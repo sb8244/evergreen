@@ -1,0 +1,8 @@
+extends layout
+
+block content
+	.scroller.content
+		- each room in privaterooms
+			include partials/room_template
+		- each room in rooms
+			include partials/room_template

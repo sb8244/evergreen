@@ -37,7 +37,7 @@ exports.process = function (req, res) {
 						form: form.toHTML()
 					});
 				} else {
-					res.redirect("/user/home");
+					res.redirect("/rooms");
 				}
 			});
 		},
