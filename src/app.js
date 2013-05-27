@@ -5,7 +5,8 @@
 var router = require("./router");
 var express = require('express')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , expressValidator = require('express-validator');
 
 var app = express();
 
@@ -16,6 +17,7 @@ app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
+app.use(expressValidator);
 app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());

@@ -2,8 +2,7 @@ extends layout
 
 block content
 	.scroller.content
+		- each room in privaterooms
+			include partials/room_template
 		- each room in rooms
-			.element
-				p #{room.name}
-				p 
-					a(href="/room/#{room._id}") Explore
+			include partials/room_template

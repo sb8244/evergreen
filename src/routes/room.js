@@ -7,7 +7,8 @@ exports.index = function(req, res) {
 		if(err) throw err;
 		res.render('room', {
 			title: 'Room',
-			room: room
+			room: room,
+			room_toolbar: true
 		});
 	});
 }

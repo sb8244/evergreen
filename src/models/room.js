@@ -10,7 +10,7 @@ exports.createRoom = function(name, password, callback) {
 	 var date = new Date();
 	 mongo.getCollection("rooms", function(err, col) {
 
-	 	if(password != null) {
+	 	if(password != null && password != "") {
 			var crypto = require('crypto');
 			var cryptPass = crypto.createHash('md5').update(password).digest("hex");
 		} else {
@@ -78,6 +78,16 @@ exports.getRoom = function(id, callback) {
 exports.listPublicRooms = function(callback) {
 	mongo.getCollection("rooms", function(err, col) {
 		col.find({password: null}).toArray(function(err, result) {
+			if(err) return callback(err, null);
+			else return callback(null, result);
+		});
+	});
+}
+
+exports.listPrivateRoomsForUser = function(user_id, callback) {
+	console.log("here");
+	mongo.getCollection("rooms", function(err, col) {
+		col.find({password: {$ne: null}, authorized_user_ids: {$in: [user_id]}}).toArray(function(err, result) {
 			if(err) return callback(err, null);
 			else return callback(null, result);
 		});
