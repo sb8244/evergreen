@@ -30,12 +30,12 @@ exports.create = function( app ) {
 	app.all('/room*', requireAuthentication);
 	app.get('/rooms', rooms.index);
 
-	app.get('/room/:id', room.index);
+	app.get('/room/:id/:upload?', room.index);
 	
-	app.get('/ajax/docuform', documentform.index);
+	app.get('/ajax/docuform/:room_id', documentform.index);
 	app.post('/ajax/docuform', documentform.process);
 
-	app.get('/upload', upload.form);
+	app.get('/upload/:room_id', upload.form);
 	app.post('/upload', upload.upload);
 
 	app.get('/ajax/rooms/add', ajax.roomToolbarForm);

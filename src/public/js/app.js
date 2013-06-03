@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 //Rooms JS
 $(document).ready(function() {
-	$(".scroller").on('click', '.element .close', function() {
+	$(".rooms-block .scroller").on('click', '.element .close', function() {
 		var self = $(this);
 		var room_id = $(this).data("id");
 		var text = "Are you sure you want to delete this room and all documents in it?";
@@ -72,5 +72,40 @@ $(document).ready(function() {
 			});
 		});
 		return false;
+	});
+});
+
+/*
+ * Room JS
+ */
+$(document).ready(function() {
+	if(window.uploadType === "image") {
+		$('.notifications').notify({
+			message: { text: 'Awesome! Your image was successfully uploaded.' }
+		}).show();	
+	}
+	$(".toolbar .btn.page").click(function() {
+		var url = "/ajax/docuform/" + window.room_id;
+		if($(".toolbar .sub").length === 0) {
+			$.get(url, function(data) {
+				$(".btn.page").text("Cancel");
+				$(".toolbar").append(data).find(".sub").fadeIn('normal');
+			});
+		} else {
+			$(".toolbar .sub").remove();
+			$(".btn.page").text("Upload Page");
+		}
+	});
+	$(".toolbar .btn.img").click(function() {
+		var url = "/upload/" + window.room_id;
+		if($(".toolbar .sub").length === 0) {
+			$.get(url, function(data) {
+				$(".btn.img").text("Cancel");
+				$(".toolbar").append(data).find(".sub").fadeIn('normal');
+			});
+		} else {
+			$(".toolbar .sub").remove();
+			$(".btn.img").text("Upload Image");
+		}
 	});
 });

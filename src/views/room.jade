@@ -1,9 +1,21 @@
 extends layout
 
 block content
-	- if(room.documents.length == 0)
-		p No documents
-	.scroller.content
-		- each document in room.documents
-			.element
-				p #{document.name}
+	.room-block
+		script(type = 'text/javascript')
+			window.room_id = "#{room._id}";
+			window.uploadType = "#{uploadType}";
+		- if(room.documents.length == 0)
+			p No documents
+		.scroller.content
+			- each document in room.documents
+				.element
+					span(class="close") &times;
+					- if(document.type === "website") {
+					p 
+						a(href="#{document.name}", target="_blank") #{document.name}
+					- } else {
+					p #{document.name}
+					- }
+					a(href="#{document.content}", target="_blank") 
+						img(src="#{document.content}")

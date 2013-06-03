@@ -1,3 +1,5 @@
-form(method='post')
-	!= form
-	input(type='submit')
+.sub
+	form(method='post', action="/ajax/docuform")
+		!= form
+		input(type='hidden',name="room_id" , value="#{room_id}")
+		input(type='submit')

@@ -12,6 +12,7 @@
     "nodeunit": "*",
     "forms": "*",
     "express-validator": "*",
-    "async": "*"
+    "async": "*",
+    "webshot": "*"
   }
 }

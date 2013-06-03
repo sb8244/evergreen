@@ -22,6 +22,7 @@ exports.addRoom = function(req, res) {
 			if(err) throw err;
 			roomProvider.pushAuthorizedUserID(result._id, user_id, function(err) {
 				if(err) throw err;
+				result.own = true;
 				res.render('partials/room_template', {
 					room: result
 				});

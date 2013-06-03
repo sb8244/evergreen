@@ -1,3 +1,5 @@
-form(method='post', enctype='multipart/form-data', action='/upload')
-	input(type='file', name='thumbnail') thumbnail
-	input(type='submit')
+.sub
+	form(method='post', enctype='multipart/form-data', action='/upload')
+		input(type='file', name='thumbnail') Upload
+		input(type='hidden', name='room_id', value=room_id)
+		input(type='submit', class="btn")
