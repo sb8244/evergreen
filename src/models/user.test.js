@@ -116,6 +116,7 @@ exports.register = {
 	}
 }
 
+
 /*
  * Helper function for array equality
  */

@@ -1,4 +1,7 @@
 .element(class= (room.password != null ? "private" : ""))
+	-if(room.password != null || room.own === true) {
+		span(class="close", data-id=room._id.toString()) &times;
+	-}
 	p #{room.name}
 	p 
 		a(href="/room/#{room._id}") Explore

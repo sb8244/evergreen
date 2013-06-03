@@ -40,6 +40,8 @@ exports.create = function( app ) {
 
 	app.get('/ajax/rooms/add', ajax.roomToolbarForm);
 	app.post('/ajax/rooms/add', ajax.addRoom);
+
+	app.post('/ajax/rooms/remove', ajax.removeRoom);
 }
 
 var loginProvider = require("./models/login");

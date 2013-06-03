@@ -75,6 +75,17 @@ exports.getRoom = function(id, callback) {
 	});
 }
 
+exports.removeRoom = function(id, user_id, callback) {
+	mongo.getCollection("rooms", function(err, col) {
+		mongo.getObjectID(id, function(object_id) {
+			col.remove({ _id: object_id, authorized_user_ids: {$in: [user_id]} }, function(err, item) {
+				if(err) return callback(err, null);
+				else return callback(null, item);
+			});
+		});
+	});
+}
+
 exports.listPublicRooms = function(callback) {
 	mongo.getCollection("rooms", function(err, col) {
 		col.find({password: null}).toArray(function(err, result) {
@@ -85,7 +96,6 @@ exports.listPublicRooms = function(callback) {
 }
 
 exports.listPrivateRoomsForUser = function(user_id, callback) {
-	console.log("here");
 	mongo.getCollection("rooms", function(err, col) {
 		col.find({password: {$ne: null}, authorized_user_ids: {$in: [user_id]}}).toArray(function(err, result) {
 			if(err) return callback(err, null);

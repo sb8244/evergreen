@@ -6,7 +6,18 @@ exports.index = function(req, res) {
 		function(callback) {
 			roomProvider.listPublicRooms(function(err, rooms) {
 				if(err) return callback(err, null);
-				return callback(null, rooms);
+				async.each(rooms, function(item, callback) {
+					if(item.authorized_user_ids.indexOf(user_id) >= 0) {
+						item.own = true;
+					} else {
+						item.own = false;
+					}
+					return callback(null, item);
+				}, function(err) {
+					if(err) return callback(err, null);
+					console.log(rooms);
+					return callback(null, rooms);
+				});
 			});
 		},
 		function(callback) {
